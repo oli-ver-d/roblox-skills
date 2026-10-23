@@ -10,7 +10,7 @@ Wire the Roblox skill pack into a specific game project so every skill knows the
 
 This is a prompt-driven skill, not a script. Explore, ask a few short questions, confirm, then write.
 
-**The tracker is for planning, not code.** The game's Luau code and instances live in the Roblox cloud experience and are edited through Studio MCP (`roblox-studio-workflow`) — never committed to Git. Git / the tracker holds only planning artifacts: `ROADMAP.md`, PRDs, slices, and UI design briefs. Make this explicit when setting up.
+**Rojo is the source of truth.** The game's Luau code and synced instances live as files in the project's Git repo, mapped by `default.project.json` and synced into Studio with `rojo serve` (`roblox-rojo-workflow`). Studio is only for testing, through the `rbxstudio` CLI (`roblox-studio-testing`) — never the Studio MCP server directly, and never as a place to read or write code. Git also holds the planning artifacts: `ROADMAP.md`, PRDs, slices, and UI design briefs. Make this explicit when setting up.
 
 ## What it writes
 
@@ -20,6 +20,7 @@ This is a prompt-driven skill, not a script. Explore, ask a few short questions,
    - the **next-skill routing** convention: at the end of any skill, tell the user which skill to run next.
    The canonical block is [claude-block.md](claude-block.md) — inject it verbatim (trimming any skill folders this project doesn't have installed).
 2. `docs/agents/` config files: the tracker, the triage labels, and the UI design artifact layout.
+3. Optionally, `.claude/settings.json` permission `Bash(rbxstudio:*)` and `Bash(rojo:*)` so testing doesn't prompt.
 
 ## Process
 
@@ -28,6 +29,9 @@ This is a prompt-driven skill, not a script. Explore, ask a few short questions,
 Read what already exists — don't assume:
 
 - `git remote -v` — is this game project a GitHub repo?
+- `default.project.json` / `*.project.json` — is there a Rojo project? If not, offer `rojo init` (or a one-time migration of an existing place, see `roblox-rojo-workflow`).
+- `rokit.toml` / `aftman.toml` — which toolchain (rojo, selene, stylua, luau-lsp) is pinned?
+- `claude mcp list` — if `Roblox_Studio` is connected, recommend `claude mcp remove Roblox_Studio` and installing `rbx-studio-cli` instead.
 - `CLAUDE.md` at the root — does it exist? Is there already a `## Roblox Skills` block?
 - `ROADMAP.md`, `roadmap/`, `.roblox/` — is a local roadmap/tracker convention already in use?
 - `docs/agents/` — did a prior run already write config?
@@ -39,13 +43,13 @@ Assume the user may be new to this. Give a one-line explainer, then the choices 
 
 **A — Where is work tracked?** Slices from `roblox-to-issues` and bugs from `roblox-triage` need a home.
 
-- **Local roadmap (default, Studio-first)** — `ROADMAP.md` as the index plus markdown files under `roadmap/<feature-slug>/`. Best for solo devs working in Studio without a Git remote. Seed from [tracker-local.md](tracker-local.md).
+- **Local roadmap (default)** — `ROADMAP.md` as the index plus markdown files under `roadmap/<feature-slug>/`, committed alongside the Rojo code. Best for solo devs without a GitHub remote. Seed from [tracker-local.md](tracker-local.md).
 - **GitHub issues** — issues live in the project's GitHub repo via the `gh` CLI. Propose this if a GitHub remote exists. Seed from [tracker-github.md](tracker-github.md).
 - **Other** (Trello, Notion, etc.) — the user describes it in a sentence; record as prose.
 
 **B — Triage labels.** The five canonical states (`needs-triage`, `needs-info`, `ready-to-build`, `needs-human`, `wontfix`) plus categories (`bug`, `enhancement`). Defaults equal their names; ask only if the user already uses different strings. Seed from [triage-labels.md](triage-labels.md).
 
-**C — UI design artifacts.** UI slices can't be built until an approved design brief exists (see `roblox-game-ux`). Confirm the layout (default: markdown briefs under `design/features/<feature-slug>/`, optionally with reference images/screenshots — Roblox UI is built in Studio, so these are specs, not HTML stylekits). Seed from [design-artifacts.md](design-artifacts.md).
+**C — UI design artifacts.** UI slices can't be built until an approved design brief exists (see `roblox-game-ux`). Confirm the layout (default: markdown briefs under `design/features/<feature-slug>/`, optionally with reference images/screenshots — Roblox UI is built in Luau / GUI files in the Rojo tree, so these are specs, not HTML stylekits). Seed from [design-artifacts.md](design-artifacts.md).
 
 ### 3. Confirm
 

@@ -38,13 +38,13 @@ Treat these carefully:
 - Trading or gifting results.
 - Daily streaks and time-gated rewards.
 
-## MCP Review Workflow
+## Review Workflow
 
-1. Use `script_grep` for `DataStore`, `UpdateAsync`, `SetAsync`, `GetAsync`, profile, save, and load.
-2. Read all persistence scripts with `script_read`.
+1. Grep the Rojo tree for `DataStore`, `UpdateAsync`, `SetAsync`, `GetAsync`, profile, save, and load.
+2. Read all persistence modules from disk.
 3. Map load, mutation, save, and shutdown flow.
-4. Patch with `multi_edit`.
-5. Playtest join/change/leave-like paths where possible and check `get_console_output`.
+4. Patch the files (`roblox-rojo-workflow`).
+5. Exercise join/change/leave paths with `roblox-studio-testing` (`rbxstudio exec` harnesses against a test store) and check `rbxstudio console`.
 
 ## Output
 

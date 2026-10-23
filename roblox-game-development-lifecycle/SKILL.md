@@ -32,7 +32,7 @@ Do not scale content until the core loop, mobile usability, save/security basics
 For an existing Roblox place:
 
 1. Read project instructions and `ROADMAP.md` when present.
-2. Use `roblox-studio-workflow` to connect to Studio.
+2. Read the Rojo project (`roblox-rojo-workflow`) and connect to Studio for testing (`roblox-studio-testing`).
 3. Check the first incomplete roadmap item.
 4. If no roadmap exists, create or propose one with lifecycle phases and approval gates.
 5. Resume from the earliest phase whose exit criteria are not met.
@@ -43,7 +43,7 @@ Use these specialist clusters:
 
 - Market and player research: `roblox-game-ideas`, `roblox-genre-patterns`, `roblox-growth-marketing`, `roblox-publishing-discovery`.
 - Concept and core loop: `roblox-game-ideas`, `roblox-retention-monetization`, `roblox-economy-balancing`, `roblox-game-ux`.
-- Prototype: `roblox-studio-workflow`, `roblox-luau-architecture`, `roblox-ui-implementation`, `roblox-world-level-design`, `roblox-asset-pipeline`.
+- Prototype: `roblox-rojo-workflow`, `roblox-studio-testing`, `roblox-luau-architecture`, `roblox-ui-implementation`, `roblox-world-level-design`, `roblox-asset-pipeline`.
 - Vertical slice: `roblox-game-ux`, `roblox-animation-audio-feedback`, `roblox-datastore-persistence`, `roblox-quest-progression-systems`, `roblox-social-systems`.
 - Production: `roblox-luau-architecture`, `roblox-combat-systems`, `roblox-quest-progression-systems`, `roblox-social-systems`, `roblox-datastore-persistence`, `roblox-security-economy`, `roblox-asset-pipeline`, `roblox-world-level-design`.
 - Internal QA and security: `roblox-playtest-qa`, `roblox-mobile-playtest`, `roblox-performance-optimization`, `roblox-debugging-bugfix`, `roblox-security-economy`, `roblox-creator-store-security-audit`, `roblox-policy-compliance`.

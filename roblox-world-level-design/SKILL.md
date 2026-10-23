@@ -46,12 +46,13 @@ Place:
 - Keep expensive particles, transparency, physics, and lights intentional.
 - Use occlusion, terrain shape, and zone gates to control visual complexity.
 
-## MCP Workflow
+## Workflow
 
-1. Inspect the world with `search_game_tree`, `inspect_instance`, and `screen_capture`.
-2. Use `character_navigation` during Play mode to test routes and first-action time.
-3. Use `execute_luau` for measurements, markers, or layout adjustments.
-4. Playtest after layout changes and check `get_console_output`.
+1. Observe the world during a test with `rbxstudio tree`, `rbxstudio inspect`, and screenshots.
+2. Use `rbxstudio nav` in Play mode to test routes and first-action time.
+3. Use `rbxstudio exec` for measurements and temporary markers only.
+4. Persist layout changes in the Rojo tree (`.rbxm` map chunks, spawn/marker config) — or, if the project keeps map geometry in an unmanaged container, have the user make and save those edits in Studio. Record which in the project instructions.
+5. Playtest after changes and check `rbxstudio console`.
 
 ## Output
 

@@ -1,6 +1,6 @@
 ---
 name: roblox-mobile-playtest
-description: Playtest and QA Roblox experiences for mobile and tablet. Use for device simulator checks, touch controls, safe areas, thumb zones, text readability, orientation, HUD overlap, first-action friction, and mobile performance verification through Studio MCP.
+description: Playtest and QA Roblox experiences for mobile and tablet. Use for device simulator checks, touch controls, safe areas, thumb zones, text readability, orientation, HUD overlap, first-action friction, and mobile performance verification in Studio via the rbxstudio CLI.
 ---
 
 # Roblox Mobile Playtest
@@ -13,14 +13,15 @@ Verify that the Roblox experience works and feels good for phone-first players.
 
 When available, invoke `rbx-device-simulator-lua` before device-specific UI checks. Use it to test phone and tablet form factors, orientation, and layout behavior.
 
-## MCP Workflow
+## Workflow
 
-1. Confirm Studio state with `get_studio_state`.
-2. Start play mode with `start_stop_play`.
+1. Confirm the connection with `rbxstudio list` (see `roblox-studio-testing`).
+2. Start play mode with `rbxstudio play start`.
 3. Use device simulation when relevant.
-4. Exercise controls with `user_mouse_input`, `user_keyboard_input`, and direct character movement through `character_navigation`.
-5. Capture evidence with `screen_capture`.
-6. Check `get_console_output`.
+4. Exercise controls with `rbxstudio mouse`, `rbxstudio key`, and `rbxstudio nav`.
+5. Capture evidence with screenshots.
+6. Check `rbxstudio console`.
+7. Fix findings in the Rojo files, never in Studio.
 
 ## Mobile Checks
 

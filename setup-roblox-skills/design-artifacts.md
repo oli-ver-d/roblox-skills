@@ -1,6 +1,6 @@
 # UI Design Artifacts
 
-Roblox UI is built in Studio (ScreenGui/Luau), not HTML — so a design artifact here is a **markdown design brief** (optionally with reference images/screenshots), not an HTML stylekit. It is the visual contract a UI slice is built against.
+Roblox UI is built as ScreenGui/Luau files in the Rojo tree, not HTML — so a design artifact here is a **markdown design brief** (optionally with reference images/screenshots), not an HTML stylekit. It is the visual contract a UI slice is built against.
 
 ## Layout
 

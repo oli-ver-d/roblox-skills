@@ -10,7 +10,7 @@ This project uses the Roblox skill pack. Route requests through these skills ins
 
 ### Golden rule: build in vertical slices
 
-Do **not** try to build a whole game (or a whole system) in one pass — that is the main cause of half-broken Roblox games. Turn a concept into a PRD (`roblox-to-prd`), slice it into small playtestable pieces (`roblox-to-issues`), and build one slice at a time, verifying each in a Studio playtest before the next. Valuable state (currency, inventory, purchases, rewards, progression) is server-authoritative from the first slice.
+Do **not** try to build a whole game (or a whole system) in one pass — that is the main cause of half-broken Roblox games. Turn a concept into a PRD (`roblox-to-prd`), slice it into small playtestable pieces (`roblox-to-issues`), and build one slice at a time in the Rojo tree, verifying each in a Studio playtest before the next. Valuable state (currency, inventory, purchases, rewards, progression) is server-authoritative from the first slice.
 
 ### Always suggest the next skill
 
@@ -23,7 +23,7 @@ Run roughly in this order; loop back as needed. Don't scale content until the co
 1. **Research** — `roblox-game-ideas`, `roblox-genre-patterns`, `roblox-growth-marketing`, `roblox-publishing-discovery`
 2. **Concept & core loop** — `roblox-game-ideas`, `roblox-retention-monetization`, `roblox-economy-balancing`, `roblox-game-ux`
 3. **Spec & slice** — `roblox-to-prd`, `roblox-to-issues`, `roblox-triage`
-4. **Prototype** — `roblox-studio-workflow`, `roblox-luau-architecture`, `roblox-ui-implementation`, `roblox-world-level-design`, `roblox-asset-pipeline`
+4. **Prototype** — `roblox-rojo-workflow`, `roblox-studio-testing`, `roblox-luau-architecture`, `roblox-ui-implementation`, `roblox-world-level-design`, `roblox-asset-pipeline`
 5. **Vertical slice** — `roblox-game-ux`, `roblox-animation-audio-feedback`, `roblox-datastore-persistence`, `roblox-quest-progression-systems`, `roblox-social-systems`
 6. **Production** — `roblox-luau-architecture`, `roblox-combat-systems`, `roblox-quest-progression-systems`, `roblox-social-systems`, `roblox-datastore-persistence`, `roblox-security-economy`, `roblox-asset-pipeline`, `roblox-world-level-design`
 7. **QA & security** — `roblox-playtest-qa`, `roblox-mobile-playtest`, `roblox-performance-optimization`, `roblox-debugging-bugfix`, `roblox-security-economy`, `roblox-creator-store-security-audit`, `roblox-policy-compliance`
@@ -55,7 +55,8 @@ Run roughly in this order; loop back as needed. Don't scale content until the co
 - **roblox-code-maintenance-refactor** — safe refactors, dead code, duplication, deepening opportunities. *Use when:* paying down tech debt without changing behavior. *Triggers:* "refactor", "clean up", "tech debt", "consolidate duplicate logic".
 - **roblox-datastore-persistence** — save/load schemas, migrations, autosave, profile locking. *Use when:* anything must survive rejoin/shutdown. *Triggers:* "DataStore", "save data", "persistence", "data loss", "profile".
 - **roblox-debugging-bugfix** — disciplined diagnosis: build a repro loop, rank hypotheses, fix, regression-test. *Use when:* something is broken/throwing/failing/flaky. *Triggers:* "debug", "diagnose", "broken", "error", "not working", "regression".
-- **roblox-studio-workflow** — safe, productive Studio MCP use (inspect, edit, insert, playtest). *Use when:* connecting to or acting through Studio. *Triggers:* "connect to Studio", "playtest", "inspect the place", "edit scripts in Studio".
+- **roblox-rojo-workflow** — Rojo is the source of truth: read, write, and organize Luau and synced instances as files; `rojo serve` syncs to Studio. *Use when:* writing or changing any code or synced instance. *Triggers:* "write a script", "edit the code", "where does this file go?", "Rojo", "project.json".
+- **roblox-studio-testing** — test in Studio via the `rbxstudio` CLI only (playtest, console, input, exec assertions, screenshots). *Use when:* verifying anything at runtime. *Triggers:* "connect to Studio", "playtest", "check the console", "run this in Studio".
 
 **Gameplay systems**
 
@@ -67,7 +68,7 @@ Run roughly in this order; loop back as needed. Don't scale content until the co
 **UX, UI & feel**
 
 - **roblox-game-ux** — design/critique UX and onboarding; **produce & approve the UI design artifact** before UI is built. *Use when:* making the experience clear/fast/touch-friendly, or before building any UI. *Triggers:* "UX", "onboarding", "design the UI", "mock this screen", "UI design".
-- **roblox-ui-implementation** — build ScreenGui/HUDs/menus in Studio against an approved design. *Use when:* implementing UI. *Triggers:* "build the HUD", "make this menu", "shop panel", "implement UI".
+- **roblox-ui-implementation** — build ScreenGui/HUDs/menus as Rojo files against an approved design. *Use when:* implementing UI. *Triggers:* "build the HUD", "make this menu", "shop panel", "implement UI".
 - **roblox-animation-audio-feedback** — animation, audio, VFX, reward juice, satisfying feedback. *Use when:* improving feel without hurting mobile perf. *Triggers:* "game feel", "juice", "VFX", "sound effects", "feedback".
 - **roblox-localization-accessibility** — text scaling, language-ready copy, contrast, readable low-text onboarding. *Use when:* broadening reach and readability. *Triggers:* "localization", "accessibility", "translate", "text scaling", "contrast".
 
@@ -108,7 +109,11 @@ Run roughly in this order; loop back as needed. Don't scale content until the co
 
 ### Where the code lives
 
-The game's Luau code and instances live in the **Roblox cloud experience** and are edited through Studio MCP (`roblox-studio-workflow`) — they are **not stored in Git**. Git / the tracker holds only **planning artifacts**: `ROADMAP.md`, PRDs, slices, and UI design briefs. Never commit game code here, and never treat a Git checkout as the source of truth for the place — the cloud experience is.
+**Rojo is the source of truth.** The game's Luau code and synced instances live as files in this repo, mapped by `default.project.json` and synced into Studio with `rojo serve` (`roblox-rojo-workflow`).
+
+- **Read and write code on disk only.** Never pull scripts out of Studio to read them, and never edit or create scripts in Studio — it is slow, token-heavy, and leaves changes outside Git.
+- **Studio is for testing only**, through the `rbxstudio` CLI (`roblox-studio-testing`): playtest, console, input, `exec` assertions, screenshots. Do not call the `Roblox_Studio` MCP server's tools directly.
+- Git also holds the planning artifacts: `ROADMAP.md`, PRDs, slices, and UI design briefs.
 
 ### Project config
 

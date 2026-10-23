@@ -13,13 +13,13 @@ Keep the experience smooth on lower-end phones. Favor measurable fixes over visu
 
 When available, invoke `rbx-scene-analysis` before deep performance work. Use it to inspect rendering, memory, instance composition, unparented instances, and animation or audio asset usage.
 
-## MCP Workflow
+## Workflow
 
-1. Confirm Studio state with `get_studio_state`.
-2. Use `search_game_tree` and `inspect_instance` to identify heavy hierarchies.
-3. Use `execute_luau` for targeted counts, tag scans, memory snapshots, or property audits.
-4. Use `screen_capture` to preserve before/after visuals.
-5. Playtest with `start_stop_play` and check `get_console_output`.
+1. Confirm the connection with `rbxstudio list` (see `roblox-studio-testing`).
+2. Use `rbxstudio tree` / `rbxstudio inspect` to find heavy runtime hierarchies.
+3. Use `rbxstudio exec` for targeted counts, tag scans, memory snapshots, or property audits (read-only measurement).
+4. Preserve before/after screenshots.
+5. Make the fix in the Rojo tree (code, `.model.json`, or `.rbxm`), then re-measure with a playtest and `rbxstudio console`.
 
 ## Optimization Targets
 

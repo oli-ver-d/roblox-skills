@@ -1,14 +1,14 @@
-# Roblox Skills for Claude Code — 40 AI Skills for Roblox Game Development
+# Roblox Skills for Claude Code — 41 AI Skills for Roblox Game Development
 
-> A curated pack of **Claude Code / Claude Agent skills** covering the full **Roblox game development lifecycle** — from game ideas and Luau architecture to monetization, retention, live ops, security, and Roblox Studio MCP workflows. Includes a **vertical-slice workflow** (PRD → issues → triage) that stops the AI from trying to build a whole game in one broken pass.
+> A curated pack of **Claude Code / Claude Agent skills** covering the full **Roblox game development lifecycle** — from game ideas and Luau architecture to monetization, retention, live ops, security, and a **Rojo-first** code workflow with Studio used only for testing. Includes a **vertical-slice workflow** (PRD → issues → triage) that stops the AI from trying to build a whole game in one broken pass.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Skills](https://img.shields.io/badge/skills-40-blue.svg)](#skill-catalog)
+[![Skills](https://img.shields.io/badge/skills-41-blue.svg)](#skill-catalog)
 [![Made for Roblox](https://img.shields.io/badge/platform-Roblox-red.svg)](https://create.roblox.com/)
 [![Luau](https://img.shields.io/badge/language-Luau-000080.svg)](https://luau.org/)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
-If you are building **Roblox games with AI** — using **Claude Code**, the **Claude Agent SDK**, or the **Roblox Studio MCP** — this repository gives your agent battle-tested, domain-specific expertise. Each skill is a focused `SKILL.md` playbook that Claude loads on demand to design, build, review, and ship better Roblox experiences.
+If you are building **Roblox games with AI** — using **Claude Code** or the **Claude Agent SDK**, with **Rojo** for code and the **`rbxstudio` CLI** for Studio testing — this repository gives your agent battle-tested, domain-specific expertise. Each skill is a focused `SKILL.md` playbook that Claude loads on demand to design, build, review, and ship better Roblox experiences.
 
 ---
 
@@ -17,6 +17,7 @@ If you are building **Roblox games with AI** — using **Claude Code**, the **Cl
 - [Why this repo](#why-this-repo)
 - [What is a Claude Code skill?](#what-is-a-claude-code-skill)
 - [Installation](#installation)
+- [Prerequisites: Rojo + rbxstudio CLI](#prerequisites-rojo--rbxstudio-cli)
 - [⚠️ Required first step: run `setup-roblox-skills`](#️-required-first-step-run-setup-roblox-skills-in-every-project)
 - [Quick start](#quick-start)
 - [Skill catalog](#skill-catalog)
@@ -38,7 +39,7 @@ Generic AI assistants know a little about everything. Roblox development rewards
 - 🧠 **Best-practice playbooks** — retention, monetization, and mobile-first rules baked in.
 - 🔒 **Security-first** — anti-dupe, anti-exploit, Creator Store asset auditing, server authority.
 - 📱 **Mobile-first** — most Roblox players are on phones; every skill respects that.
-- 🛠️ **Roblox Studio MCP aware** — skills know how to inspect, edit, and playtest through Studio MCP.
+- 🛠️ **Rojo-first** — code lives as files in Git and syncs with `rojo serve`; Studio is only touched for testing, through the token-light [`rbxstudio` CLI](https://github.com/nanlulu/roblox-studio-cli).
 - 💸 **Fair monetization** — designed to grow revenue without pay-to-win.
 
 ## What is a Claude Code skill?
@@ -67,6 +68,16 @@ git clone https://github.com/AshExplained/roblox-skills.git "$env:USERPROFILE\.c
 
 Each subfolder contains one `SKILL.md`. Claude Code discovers the skills automatically once they're installed.
 
+### Prerequisites: Rojo + rbxstudio CLI
+
+The skills assume **[Rojo](https://rojo.space/) is the source of truth** for your game and **Studio is only used for testing**:
+
+1. **Rojo** — install (e.g. via [Rokit](https://github.com/rojo-rbx/rokit): `rokit add rojo-rbx/rojo`) and the Rojo Studio plugin. Your Luau and synced instances live as files in your game's Git repo; `rojo serve` syncs them into Studio.
+2. **rbxstudio CLI** — `npm install -g rbx-studio-cli`, then enable *Studio as MCP server* in Studio (Assistant → Manage MCP Servers). The CLI wraps the Studio MCP server with plain-text output, so Claude doesn't pay for MCP tool schemas on every message.
+3. **Remove the direct Studio MCP connection** if you added it: `claude mcp remove Roblox_Studio`. The skills never call it directly.
+
+Claude reads and writes code **on disk only** — it never pulls scripts out of Studio (slow and token-heavy) or edits them there. `rbxstudio` is used purely to playtest, read the console, drive input, and assert runtime state.
+
 ## ⚠️ Required first step: run `setup-roblox-skills` in every project
 
 **Before anything else — and once per game project — run [`setup-roblox-skills`](setup-roblox-skills/SKILL.md).**
@@ -79,7 +90,7 @@ Installing the skills only makes them *available*. This setup step is what makes
 
 Skip this step and the skills still load, but Claude won't have the lifecycle context that keeps it building in vertical slices and routing between skills. Re-run it only if you change trackers or want to refresh the block.
 
-> Reminder: `setup-roblox-skills` writes only planning config to `CLAUDE.md`. Your game's Luau code stays in the Roblox cloud experience — see [Git tracks planning, not code](#how-the-skills-fit-together).
+> Reminder: `setup-roblox-skills` writes routing and planning config to `CLAUDE.md`, including the rule that Rojo files are the source of truth and Studio is for testing only — see [Rojo is the source of truth](#how-the-skills-fit-together).
 
 ## Quick start
 
@@ -92,7 +103,7 @@ After setup, just describe what you want in natural language. Claude picks the r
 
 ## Skill catalog
 
-All 40 skills, grouped by phase of the **Roblox game development lifecycle (GDLC)**. Start with `setup-roblox-skills` (see above), then the umbrella `roblox-game-development-lifecycle` router.
+All 41 skills, grouped by phase of the **Roblox game development lifecycle (GDLC)**. Start with `setup-roblox-skills` (see above), then the umbrella `roblox-game-development-lifecycle` router.
 
 ### 🚀 Orchestration & Strategy
 
@@ -109,8 +120,9 @@ All 40 skills, grouped by phase of the **Roblox game development lifecycle (GDLC
 | [`roblox-luau-architecture`](roblox-luau-architecture/SKILL.md) | ModuleScript/service boundaries, client-server flow, RemoteEvents, ReplicatedStorage. |
 | [`roblox-code-maintenance-refactor`](roblox-code-maintenance-refactor/SKILL.md) | Safe refactoring, dead code removal, module boundaries, long-term codebase health. |
 | [`roblox-datastore-persistence`](roblox-datastore-persistence/SKILL.md) | Save/load schemas, migrations, autosave, profile locking, data-loss debugging. |
-| [`roblox-debugging-bugfix`](roblox-debugging-bugfix/SKILL.md) | Root-cause debugging through Studio MCP with post-fix verification. |
-| [`roblox-studio-workflow`](roblox-studio-workflow/SKILL.md) | Safe, productive Roblox Studio MCP usage for inspecting, editing, and playtesting. |
+| [`roblox-debugging-bugfix`](roblox-debugging-bugfix/SKILL.md) | Root-cause debugging: fix in the Rojo files, reproduce and verify in Studio. |
+| [`roblox-rojo-workflow`](roblox-rojo-workflow/SKILL.md) | Rojo as the source of truth: read, write, and organize Luau and synced instances on disk. |
+| [`roblox-studio-testing`](roblox-studio-testing/SKILL.md) | Test-only Studio access through the `rbxstudio` CLI: playtest, console, input, exec assertions. |
 
 ### ⚔️ Gameplay Systems
 
@@ -194,8 +206,8 @@ flowchart TD
     P1["1 · Research"] --> P2["2 · Concept &amp; Core Loop"] --> Spec
 
     Spec["3 · Spec &amp; Slice<br/>roblox-to-prd → roblox-to-issues → roblox-triage"] --> Build
-    Build["4–6 · Build ONE slice<br/><i>prototype · vertical slice · production</i>"] --> QA
-    QA["7 · QA &amp; Security<br/><i>playtest in Studio</i>"] -->|"build next slice ↻"| Spec
+    Build["4–6 · Build ONE slice in Rojo<br/><i>prototype · vertical slice · production</i>"] --> QA
+    QA["7 · QA &amp; Security<br/><i>playtest in Studio via rbxstudio</i>"] -->|"build next slice ↻"| Spec
 
     QA --> Soft["8 · Soft Launch"] --> Polish["9 · Polish &amp; Balance"] --> Launch["10 · Publish &amp; Launch"]
     Launch --> Live["11 · Live Ops"] --> Maint["12 · Maintenance &amp; Growth"]
@@ -221,7 +233,7 @@ Start broad, then go deep. The **`roblox-game-development-lifecycle`** skill act
 1. **Setup once.** Run [`setup-roblox-skills`](setup-roblox-skills/SKILL.md) in your game project. It writes a routing block into `CLAUDE.md` so every skill knows the lifecycle, its neighbors, and **ends by telling you which skill to run next** — each skill also carries a `## Next` tip for this.
 2. **Build in vertical slices.** Instead of generating an entire game in one pass, go **concept → [`roblox-to-prd`](roblox-to-prd/SKILL.md) → [`roblox-to-issues`](roblox-to-issues/SKILL.md) → [`roblox-triage`](roblox-triage/SKILL.md) → build one slice → playtest → repeat.** Each slice cuts through client, server, remotes, data, and UI for one small player-facing capability that you can verify in Studio on its own.
 
-> **Git tracks planning, not code.** Your game's Luau and instances live in the **Roblox cloud experience** and are edited through Studio MCP — they are never committed to Git. The tracker (GitHub issues or a local `roadmap/` folder) holds only planning artifacts: the roadmap, PRDs, slices, and UI design briefs.
+> **Rojo is the source of truth.** Your game's Luau and synced instances live as files in Git, synced into Studio with `rojo serve` ([`roblox-rojo-workflow`](roblox-rojo-workflow/SKILL.md)). Claude never pulls code from Studio or edits it there; Studio is used only for testing via the `rbxstudio` CLI ([`roblox-studio-testing`](roblox-studio-testing/SKILL.md)). Planning artifacts — the roadmap, PRDs, slices, and UI design briefs — sit alongside the code (or in GitHub issues).
 
 Several core skills also carry battle-tested engineering discipline: [`roblox-debugging-bugfix`](roblox-debugging-bugfix/SKILL.md) builds a reproduction loop and ranks falsifiable hypotheses before touching a fix; [`roblox-game-ux`](roblox-game-ux/SKILL.md) produces an approved UI design brief before [`roblox-ui-implementation`](roblox-ui-implementation/SKILL.md) builds it; and [`roblox-luau-architecture`](roblox-luau-architecture/SKILL.md) applies the deep-module / deletion-test lens.
 
@@ -243,7 +255,7 @@ This project is licensed under the **MIT License** — see the [LICENSE](LICENSE
 
 ## Keywords
 
-Roblox · Roblox game development · Roblox Studio · Luau · Claude Code · Claude Agent SDK · AI skills · Roblox Studio MCP · Roblox scripting · Roblox monetization · Roblox retention · Roblox game design · DataStore · RemoteEvents · server authority · anti-exploit · anti-dupe · Roblox economy · live ops · mobile-first games · game passes · developer products · Roblox UX · Roblox tycoon · Roblox simulator · Roblox obby · game development lifecycle · AI game development
+Roblox · Roblox game development · Roblox Studio · Luau · Claude Code · Claude Agent SDK · AI skills · Rojo · rbxstudio CLI · Roblox scripting · Roblox monetization · Roblox retention · Roblox game design · DataStore · RemoteEvents · server authority · anti-exploit · anti-dupe · Roblox economy · live ops · mobile-first games · game passes · developer products · Roblox UX · Roblox tycoon · Roblox simulator · Roblox obby · game development lifecycle · AI game development
 
 ---
 

@@ -46,9 +46,9 @@ Present three buckets, oldest first: **untriaged**, **`needs-triage`**, and **`n
 
 ## Triage one item
 
-1. **Gather context.** Read the item fully (and prior triage notes so you don't re-ask). Connect via `roblox-studio-workflow` and inspect the relevant scripts/instances. For UI items, check the design artifact.
+1. **Gather context.** Read the item fully (and prior triage notes so you don't re-ask). Read the relevant files in the Rojo tree (`roblox-rojo-workflow`). For UI items, check the design artifact.
 2. **Recommend.** State your category + state recommendation with reasoning and a short summary of the relevant place state. Wait for direction.
-3. **Reproduce (bugs only).** Before anything else, try to reproduce in a Studio playtest and read `get_console_output`. A confirmed repro (with the failing code path) makes a far stronger build brief; no repro is a strong `needs-info` signal. Hand hard bugs to `roblox-debugging-bugfix`.
+3. **Reproduce (bugs only).** Before anything else, try to reproduce in a Studio playtest (`roblox-studio-testing`) and read `rbxstudio console`. A confirmed repro (with the failing code path) makes a far stronger build brief; no repro is a strong `needs-info` signal. Hand hard bugs to `roblox-debugging-bugfix`.
 4. **Sharpen (if needed).** If the item is vague, run a short grilling pass (see `roblox-game-ideas` grilling mode) to pin down the decision.
 5. **Apply the outcome:**
    - `ready-to-build` — post a build brief ([BUILD-BRIEF.md](BUILD-BRIEF.md)). For UI, include the approved artifact path.

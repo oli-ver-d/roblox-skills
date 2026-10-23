@@ -15,7 +15,7 @@ The single biggest failure mode in AI-built Roblox games is trying to build the 
 
 ## Process
 
-1. **Read the current state.** Connect through `roblox-studio-workflow` if a place exists. Read `ROADMAP.md` if present. Use the game's own vocabulary consistently (currency names, entity names, zone names).
+1. **Read the current state.** Read the Rojo tree (`roblox-rojo-workflow`) if the game already has code. Read `ROADMAP.md` if present. Use the game's own vocabulary consistently (currency names, entity names, zone names).
 
 2. **Sketch the systems, not the whole game.** List the major server-authoritative systems and client controllers this concept needs (core loop, economy, save/load, progression, social, UI surfaces). Flag which hold **valuable state** (currency, inventory, purchases, rewards, progression) — those must be server-authoritative. Confirm the system list matches the user's expectation before writing.
 

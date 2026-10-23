@@ -32,13 +32,12 @@ Give players clear short-term wins and long-term reasons to return.
 - Make reward claims idempotent.
 - Save progress through DataStore-backed profile state.
 
-## MCP Workflow
+## Workflow
 
-1. Search for quest/progression scripts and UI.
-2. Read definitions, progress mutation, reward, and save scripts.
-3. Inspect objective markers and reward UI instances.
-4. Patch with `multi_edit` or targeted `execute_luau`.
-5. Playtest a full quest loop and check console output.
+1. Grep the Rojo tree for quest/progression code and UI.
+2. Read definitions, progress mutation, reward, and save modules from disk.
+3. Patch the files (`roblox-rojo-workflow`); keep quest definitions as data modules.
+4. Playtest a full quest loop with `roblox-studio-testing`, asserting progress via `rbxstudio exec`, and check `rbxstudio console`.
 
 ## Output
 

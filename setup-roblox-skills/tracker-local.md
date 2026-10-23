@@ -1,6 +1,6 @@
-# Tracker: Local Roadmap (Studio-first)
+# Tracker: Local Roadmap
 
-Work for this game is tracked as **markdown planning files**, not code. The game's Luau and instances live in the Roblox cloud experience (edited through Studio MCP) — this folder only holds the roadmap, PRDs, slices, and design briefs. Best for solo devs working in Studio without a Git remote. This is the default.
+Work for this game is tracked as **markdown planning files** committed next to the Rojo code (the game's source of truth, see `roblox-rojo-workflow`). This folder holds the roadmap, PRDs, slices, and design briefs. Best for solo devs without a GitHub remote. This is the default.
 
 ## Layout
 

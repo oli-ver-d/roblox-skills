@@ -38,13 +38,13 @@ Beyond obvious cleanup, hunt for **shallow modules** to deepen — where the int
 
 Apply the **deletion test** to anything you suspect is shallow: if deleting it just moves complexity around, inline it; if deleting it would scatter the same complexity across many call sites, keep it and give it a small, stable interface named from the game's vocabulary. Present each opportunity as: files involved · the friction today · the proposed change · the benefit (locality + testability). Don't propose new indirection for a single implementation. See `roblox-luau-architecture` for the deep-module model.
 
-## MCP Workflow
+## Workflow
 
-1. Use `script_grep` to find duplication, old names, or call sites.
-2. Read all affected scripts with `script_read`.
-3. Make small edits with `multi_edit`.
-4. Use `start_stop_play` to verify the relevant loop.
-5. Check `get_console_output`.
+1. Grep the Rojo tree for duplication, old names, and call sites.
+2. Read all affected files from disk.
+3. Make small edits in the files (`roblox-rojo-workflow`); run `selene` / `luau-lsp analyze` if configured.
+4. Verify the relevant loop with `roblox-studio-testing` (`rbxstudio play start`, then `rbxstudio console`).
+5. Commit each behavior-preserving step separately.
 
 ## Output
 

@@ -2,7 +2,7 @@
 
 Slices, PRDs, and bugs for this game live as GitHub issues. Use the `gh` CLI. Propose this only if the project has a GitHub remote (`git remote -v`).
 
-**Issues only — not code.** GitHub here is an issue tracker, not the game's source of truth. The Luau code and instances live in the Roblox cloud experience and are edited through Studio MCP; do not commit game code to this repo. If the repo exists at all, it should contain only planning artifacts (`ROADMAP.md`, PRDs, slices, design briefs) — add a `.gitignore` for any local Studio/Rojo exports so they never get committed.
+**Issues track work; the repo holds the code.** The game's Luau and synced instances live in this repo as a Rojo project (`roblox-rojo-workflow`), alongside planning artifacts (`ROADMAP.md`, PRDs, slices, design briefs). Link issues to the commits/PRs that change the Rojo tree. Ignore Studio place files (`*.rbxl`, `*.rbxlx`, `*.lock`) in `.gitignore`; commit only the Rojo sources.
 
 ## Conventions
 
@@ -17,7 +17,7 @@ Slices, PRDs, and bugs for this game live as GitHub issues. Use the `gh` CLI. Pr
 
 ## Keep ROADMAP.md too
 
-Even with GitHub issues, maintain `ROADMAP.md` as the at-a-glance index (`[ ]` / `[~]` / `[x]`), linking each line to its issue. Studio-first devs read the roadmap more than the issue tracker.
+Even with GitHub issues, maintain `ROADMAP.md` as the at-a-glance index (`[ ]` / `[~]` / `[x]`), linking each line to its issue. Solo devs often read the roadmap more than the issue tracker.
 
 ## When a skill says "publish to the tracker"
 

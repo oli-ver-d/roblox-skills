@@ -44,13 +44,13 @@ Protect valuable game state while keeping the player loop fair. Anything that gr
 - Commit atomically from server state where possible.
 - Log valuable trades and grant paths for later investigation.
 
-## MCP Review Workflow
+## Review Workflow
 
-1. Use `script_grep` for remotes, currency names, DataStore usage, receipt handlers, and grant functions.
-2. Read every script that touches value with `script_read`.
-3. Inspect relevant instances with `search_game_tree` and `inspect_instance`.
-4. Patch with `multi_edit` only after mapping source-to-sink flow.
-5. Playtest purchase-free paths and console errors with `start_stop_play` and `get_console_output`.
+1. Grep the Rojo tree for remotes, currency names, DataStore usage, receipt handlers, and grant functions.
+2. Read every file that touches value from disk.
+3. Map source-to-sink flow before changing anything.
+4. Patch the files (`roblox-rojo-workflow`).
+5. Test purchase-free paths and malicious payloads with `roblox-studio-testing` (`rbxstudio exec` firing crafted remote calls), then check `rbxstudio console`.
 
 ## Output
 

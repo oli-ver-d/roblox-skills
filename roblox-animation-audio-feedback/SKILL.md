@@ -27,14 +27,14 @@ Use layered feedback:
 - Use consistent audio language for success, danger, rarity, and progression.
 - Make rare rewards feel distinct without requiring long animations.
 
-## MCP Workflow
+## Workflow
 
-1. Search scripts and assets for animation, sound, reward, and effect hooks.
-2. Inspect relevant instances with `search_game_tree` and `inspect_instance`.
-3. Use `search_asset` for audio/visual assets before generating new ones.
-4. Patch trigger code with `multi_edit` or use `execute_luau` for instance setup.
-5. Playtest and capture with `screen_capture`.
-6. Check `get_console_output`.
+1. Grep the Rojo tree for animation, sound, reward, and effect hooks; read them from disk.
+2. Check `rbxstudio tree` / `rbxstudio inspect` only to confirm runtime instances exist during a test.
+3. Pick audio/visual assets via `roblox-asset-pipeline`; record their IDs in a config module.
+4. Patch trigger code and effect config in the Rojo files (`roblox-rojo-workflow`).
+5. Playtest with `roblox-studio-testing` and capture before/after screenshots.
+6. Check `rbxstudio console`.
 
 ## Output
 

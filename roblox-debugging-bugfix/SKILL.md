@@ -1,6 +1,6 @@
 ---
 name: roblox-debugging-bugfix
-description: Debug and fix Roblox bugs through Studio MCP. Use for repro steps, console errors, script search/read/edit flow, broken UI, failed gameplay systems, data issues, remotes, regressions, root-cause reports, and post-fix verification.
+description: Debug and fix Roblox bugs — code read and fixed in the Rojo tree, reproduced in Studio via the rbxstudio CLI. Use for repro steps, console errors, broken UI, failed gameplay systems, data issues, remotes, regressions, root-cause reports, and post-fix verification.
 ---
 
 # Roblox Debugging Bugfix
@@ -15,8 +15,8 @@ Everything else is mechanical once you have a fast, repeatable pass/fail signal 
 
 Ways to construct one, roughly in order:
 
-1. **Studio playtest repro** — the exact steps in Play mode that surface the bug; watch `get_console_output`.
-2. **`execute_luau` harness** — call the suspect server/module function directly with a fixture input and assert the result, instead of clicking through the whole game.
+1. **Studio playtest repro** — the exact steps in Play mode that surface the bug; watch `rbxstudio console`.
+2. **`rbxstudio exec` harness** — call the suspect server/module function directly with a fixture input and assert the result, instead of clicking through the whole game.
 3. **Targeted scenario** — spawn the minimal instances/state that trigger the code path (one part, one remote, one player state).
 4. **Replay a captured payload** — save the real remote payload / data profile that misbehaves and push it back through the code path in isolation.
 
@@ -36,23 +36,23 @@ Generate **3–5 ranked, falsifiable hypotheses** before testing any — single-
 
 ## Phase 4 — Instrument
 
-Each probe maps to one hypothesis; change one variable at a time. Prefer inspecting real values (`inspect_instance`, `execute_luau`) over log spam. **Tag every temporary log** with a unique prefix like `[DEBUG-a4f2]` so cleanup is a single `script_grep`. For performance regressions, measure first (timing/`os.clock`, MicroProfiler, instance counts) and bisect — logs are usually the wrong tool.
+Each probe maps to one hypothesis; change one variable at a time. Prefer inspecting real values (`rbxstudio inspect`, `rbxstudio exec`) over log spam. Add temporary logs in the Rojo files, never in Studio. **Tag every temporary log** with a unique prefix like `[DEBUG-a4f2]` so cleanup is a single Grep over the Rojo tree. For performance regressions, measure first (timing/`os.clock`, MicroProfiler, instance counts) and bisect — logs are usually the wrong tool.
 
 ## Phase 5 — Fix + regression check
 
-Make the smallest safe fix with `multi_edit`. Before declaring done, turn the repro into a durable check where a correct seam exists (an `execute_luau` assertion or a documented playtest step). If no good seam exists, that itself is a finding — note that the architecture is preventing the bug from being locked down.
+Make the smallest safe fix in the Rojo files. Before declaring done, turn the repro into a durable check where a correct seam exists (a versioned `rbxstudio exec --file tests/...` assertion or a documented playtest step). If no good seam exists, that itself is a finding — note that the architecture is preventing the bug from being locked down.
 
 ## Debug Loop (mechanics)
 
 1. Capture the user-visible symptom and expected behavior.
-2. Reproduce in Play mode when possible.
-3. Read `get_console_output`.
-4. Search with `script_grep` and `script_search`.
-5. Read relevant scripts with `script_read`.
-6. Inspect relevant instances with `search_game_tree` and `inspect_instance`.
-7. Make the smallest safe fix with `multi_edit`.
+2. Reproduce in Play mode when possible (`roblox-studio-testing`).
+3. Read `rbxstudio console`.
+4. Search the Rojo tree with Grep/Glob — never pull scripts from Studio.
+5. Read the relevant files from disk.
+6. Inspect runtime instances with `rbxstudio tree` and `rbxstudio inspect`.
+7. Make the smallest safe fix in the files (`roblox-rojo-workflow`).
 8. Re-run the repro and check console output again.
-9. Remove all `[DEBUG-...]` instrumentation (`script_grep` the prefix).
+9. Remove all `[DEBUG-...]` instrumentation (Grep the prefix in the Rojo tree).
 
 ## Common Bug Classes
 
@@ -61,7 +61,7 @@ Make the smallest safe fix with `multi_edit`. Before declaring done, turn the re
 - UI not updating after server state changes.
 - Event connections duplicated or never disconnected.
 - DataStore load/save race.
-- Object path renamed or missing.
+- Object path renamed or missing (or an instance that exists only in Studio, not in the Rojo tree).
 - Play mode DataModel mismatch.
 - Race between character spawn, UI creation, and server initialization.
 

@@ -1,22 +1,21 @@
 ---
 name: roblox-luau-architecture
-description: Design, inspect, and refactor Roblox Luau game architecture. Use for ModuleScript/service boundaries, client-server flow, RemoteEvents/RemoteFunctions, ReplicatedStorage organization, reusable systems, script placement, and safe Studio MCP code-edit workflows.
+description: Design, inspect, and refactor Roblox Luau game architecture. Use for ModuleScript/service boundaries, client-server flow, RemoteEvents/RemoteFunctions, ReplicatedStorage organization, reusable systems, script placement, and Rojo project layout.
 ---
 
 # Roblox Luau Architecture
 
 ## Goal
 
-Keep Roblox game code modular, server-authoritative, and easy to extend. Use Roblox Studio MCP to inspect existing scripts before changing architecture.
+Keep Roblox game code modular, server-authoritative, and easy to extend. Code lives in the Rojo tree on disk; read the existing files before changing architecture.
 
-## MCP Workflow
+## Workflow
 
-1. Start with `list_roblox_studios`, `set_active_studio` if needed, and `get_studio_state`.
-2. Locate code with `script_search` or `script_grep`.
-3. Read relevant scripts with `script_read` before editing.
-4. Apply edits with `multi_edit`.
-5. Playtest with `start_stop_play`.
-6. Check `get_console_output` for regressions.
+1. Read `default.project.json` to see how the Rojo tree maps to services (`roblox-rojo-workflow`).
+2. Locate code with Grep/Glob in the Rojo tree.
+3. Read relevant files from disk before editing. Never pull scripts from Studio.
+4. Edit the files; run `selene` / `luau-lsp analyze` if configured.
+5. Playtest with `roblox-studio-testing` and check `rbxstudio console` for regressions.
 
 ## Placement Rules
 
@@ -62,7 +61,7 @@ Good seams get names from the game's own vocabulary (the "coin economy service",
 
 When proposing or making architecture changes, include:
 
-- Current script locations and responsibilities.
+- Current file locations in the Rojo tree and their responsibilities.
 - Proposed module/service boundaries.
 - Remote contract changes.
 - Migration steps.

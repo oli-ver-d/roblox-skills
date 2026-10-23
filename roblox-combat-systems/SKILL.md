@@ -36,14 +36,13 @@ Design:
 - Enemy AI target selection and leash rules.
 - Reward grants tied to server-confirmed contribution.
 
-## MCP Workflow
+## Workflow
 
-1. Locate combat scripts with `script_search` and `script_grep`.
-2. Read attack, damage, enemy, and reward scripts with `script_read`.
-3. Inspect remotes and combat instances with `search_game_tree` and `inspect_instance`.
-4. Edit with `multi_edit`.
-5. Playtest attacks using `start_stop_play`, `user_keyboard_input`, `user_mouse_input`, and `screen_capture`.
-6. Check `get_console_output`.
+1. Locate combat code with Grep/Glob in the Rojo tree.
+2. Read attack, damage, enemy, and reward modules from disk; read remote declarations (`.model.json`) too.
+3. Edit the files (`roblox-rojo-workflow`).
+4. Playtest attacks with `roblox-studio-testing`: `rbxstudio play start`, `rbxstudio key`, `rbxstudio mouse`, screenshots.
+5. Assert damage/health state with `rbxstudio exec` and check `rbxstudio console`.
 
 ## Output
 

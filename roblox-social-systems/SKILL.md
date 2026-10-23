@@ -32,14 +32,13 @@ Make friends useful early. Social connection is one of the strongest retention m
 - Add audit logs for valuable exchanges.
 - Avoid designs that enable harassment, spam, or coercive monetization.
 
-## MCP Workflow
+## Workflow
 
-1. Search for social, trade, party, leaderboard, and group scripts.
-2. Read server and client code before edits.
-3. Inspect remotes and UI.
-4. Patch with `multi_edit`.
-5. Playtest with available players or simulate state with `execute_luau`.
-6. Check `get_console_output`.
+1. Grep the Rojo tree for social, trade, party, leaderboard, and group code.
+2. Read server and client files from disk before editing.
+3. Patch the files (`roblox-rojo-workflow`), including remote declarations.
+4. Test with `roblox-studio-testing`; simulate multi-player state with `rbxstudio exec`.
+5. Check `rbxstudio console`.
 
 ## Output
 

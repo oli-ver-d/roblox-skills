@@ -1,6 +1,6 @@
 ---
 name: roblox-playtest-qa
-description: Playtest Roblox experiences through Studio MCP with attention to first-session fun, mobile UX, console errors, progression, social hooks, performance, and exploit-sensitive flows.
+description: Playtest Roblox experiences in Studio via the rbxstudio CLI with attention to first-session fun, mobile UX, console errors, progression, social hooks, performance, and exploit-sensitive flows.
 ---
 
 # Roblox Playtest QA
@@ -11,10 +11,12 @@ Use this skill to verify that a Roblox change works in Studio and supports playe
 
 ## Setup
 
-1. Run `list_roblox_studios`.
-2. Use `set_active_studio` if needed.
-3. Run `get_studio_state`.
-4. Start play mode with `start_stop_play` when verification requires live behavior.
+Follow `roblox-studio-testing`: the code under test is the Rojo tree on disk, synced by `rojo serve`.
+
+1. Run `rbxstudio list`.
+2. Use `rbxstudio use <id>` if needed.
+3. Confirm Rojo is connected so Studio runs the current files.
+4. Start play mode with `rbxstudio play start` when verification requires live behavior.
 
 ## Test Checklist
 
@@ -27,15 +29,17 @@ Use this skill to verify that a Roblox change works in Studio and supports playe
 - Monetization prompts are optional and do not interrupt first-session flow.
 - Server-side systems own valuable state.
 - No obvious frame drops or runaway instance/script growth.
-- `get_console_output` has no new errors.
+- `rbxstudio console` has no new errors.
 
-## MCP Tools To Use
+## Commands To Use
 
-- `character_navigation` for movement and route checks.
-- `user_keyboard_input` and `user_mouse_input` for controls and UI.
-- `screen_capture` for visual verification.
-- `get_console_output` for errors and warnings.
-- `inspect_instance` or `execute_luau` for state checks after interaction.
+- `rbxstudio nav` for movement and route checks.
+- `rbxstudio key` and `rbxstudio mouse` for controls and UI.
+- Screenshots (`rbxstudio raw screen_capture`) for visual verification.
+- `rbxstudio console` for errors and warnings.
+- `rbxstudio inspect` or `rbxstudio exec` for state checks after interaction.
+
+Don't read or edit scripts in Studio during QA; failures go back to the Rojo files.
 
 ## Report Format
 

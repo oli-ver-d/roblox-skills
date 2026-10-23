@@ -1,6 +1,6 @@
 ---
 name: roblox-ui-implementation
-description: Implement Roblox UI in Studio. Use for ScreenGui, HUDs, menus, mobile-safe layouts, UI state controllers, touch controls, buttons, progress bars, shop panels, reward surfaces, and verifying UI through Roblox Studio MCP.
+description: Implement Roblox UI as files in the Rojo tree, verified in Studio. Use for ScreenGui, HUDs, menus, mobile-safe layouts, UI state controllers, touch controls, buttons, progress bars, shop panels, reward surfaces, and verifying UI with the rbxstudio CLI.
 ---
 
 # Roblox UI Implementation
@@ -43,13 +43,13 @@ If the brief is missing or still `draft`, stop and run `roblox-game-ux` to produ
 - Rewards: short celebration, visible delta, next goal.
 - Settings: audio, graphics/performance, input preferences.
 
-## MCP Build Workflow
+## Build Workflow
 
-1. Locate UI scripts and GUI instances with `script_search`, `script_grep`, and `search_game_tree`.
-2. Read scripts with `script_read` and inspect GUI instances with `inspect_instance`.
-3. Use `multi_edit` for code changes or `execute_luau` for targeted GUI construction.
-4. Use `start_stop_play`, `user_mouse_input`, `user_keyboard_input`, and `screen_capture` to verify.
-5. Check `get_console_output`.
+1. Locate UI code and GUI definitions with Grep/Glob in the Rojo tree.
+2. Read controllers and GUI files (`.luau`, `.model.json`, `.rbxmx`) from disk.
+3. Build or change UI in files (`roblox-rojo-workflow`) — in code or declarative GUI files, never by hand in Studio.
+4. Verify with `roblox-studio-testing`: `rbxstudio play start`, `rbxstudio mouse`, `rbxstudio key`, screenshots.
+5. Check `rbxstudio console`.
 
 ## Verification
 

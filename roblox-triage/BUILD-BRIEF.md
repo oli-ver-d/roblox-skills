@@ -7,7 +7,7 @@ A build brief is the authoritative spec posted on a slice when it moves to `read
 ### Durable, not path-bound
 
 - **Do** describe behavior, remote contracts, data shape, and which service/module owns the state.
-- **Don't** reference exact script paths or line numbers — they go stale in Studio as things get renamed and moved. Name the system ("the coin economy service"), not the instance path.
+- **Don't** reference exact file paths or line numbers — they go stale as files in the Rojo tree get renamed and moved. Name the system ("the coin economy service"), not the instance path.
 
 ### Behavioral, not procedural
 

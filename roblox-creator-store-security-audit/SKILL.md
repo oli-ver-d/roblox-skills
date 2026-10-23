@@ -29,12 +29,14 @@ For third-party model/package/gameplay/UI assets:
 4. Prefer visual-only extraction: keep meshes, parts, textures, sounds, particles, and UI art; remove unknown behavior.
 5. Record asset name, asset ID, creator/source, inserted path, and audit result.
 
-## MCP Audit Workflow
+## Audit Workflow
 
-1. Confirm Studio connection with `list_roblox_studios`, `set_active_studio` if needed, and `get_studio_state`.
-2. Locate the imported asset with `search_game_tree`.
-3. Inspect the imported root with `inspect_instance`.
-4. Search code with `script_grep` for suspicious patterns:
+This is the one place where reading scripts out of Studio is allowed: the code under review is third-party and exists only in the quarantined import. Use the `rbxstudio` CLI (`roblox-studio-testing`), never the Studio MCP tools directly.
+
+1. Confirm the connection with `rbxstudio list` (and `rbxstudio use <id>` if needed).
+2. Locate the imported asset with `rbxstudio tree --path <quarantine folder>`.
+3. Inspect the imported root with `rbxstudio inspect`.
+4. Search the quarantined code with `rbxstudio grep` for suspicious patterns:
    - `require`
    - `getfenv`
    - `setfenv`
@@ -56,10 +58,11 @@ For third-party model/package/gameplay/UI assets:
    - `spawn`
    - `coroutine`
    - `while true`
-5. Use `script_search` and `script_read` on every imported `Script`, `LocalScript`, and `ModuleScript`.
+5. Use `rbxstudio read` on every imported `Script`, `LocalScript`, and `ModuleScript` in the quarantine folder.
 6. Inspect descendants for scripts hidden under unexpected objects, disabled scripts, deceptive names, or deeply nested containers.
-7. If scripts are not needed, remove or disable them with `multi_edit` or targeted `execute_luau`.
-8. Playtest in isolation with `start_stop_play`, then check `get_console_output`.
+7. Strip scripts that are not needed (targeted `rbxstudio exec` on the quarantine copy only).
+8. Playtest in isolation with `rbxstudio play start`, then check `rbxstudio console`.
+9. Persist only the vetted result into the Rojo tree (asset ID in config, or a saved `.rbxm`); any script kept from the asset becomes a reviewed `.luau` file under Rojo (`roblox-rojo-workflow`).
 
 ## Red Flags
 

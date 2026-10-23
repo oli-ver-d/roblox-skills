@@ -11,13 +11,13 @@ Choose assets that fit the game fantasy, load reliably, and stay within mobile p
 
 ## Selection Order
 
-1. Search existing assets with `search_asset`.
+1. Reuse assets already referenced in the Rojo tree (asset-ID config modules, `.rbxm` files) before sourcing new ones.
 2. Before inserting Creator Store or third-party model/package assets, plan a `roblox-creator-store-security-audit` pass.
-3. Insert selected assets with `insert_asset`.
-4. Generate custom meshes with `generate_mesh` only when existing assets do not fit.
-5. Generate custom materials with `generate_material` for unique surface treatments.
-6. Generate procedural models with `generate_procedural_model` when configurable primitive-based models are useful.
-7. Use `store_image` or `upload_image` for local or web images that need to become Roblox assets.
+3. Insert selected Creator Store assets for evaluation with `rbxstudio store '<query>'` (into a quarantine folder Rojo does not manage).
+4. Generate custom meshes with `rbxstudio mesh '<prompt>'` only when existing assets do not fit.
+5. Generate custom materials with `rbxstudio material '<prompt>'` for unique surface treatments.
+6. For other Studio asset tools (procedural models, image upload), use `rbxstudio raw <tool> '<json>'` — run `rbxstudio tools` to see what's available.
+7. Every kept asset ends up in the Rojo tree (ID in config or saved `.rbxm`) — see the workflow below.
 
 ## Cross-Owner Caution
 
@@ -42,15 +42,13 @@ Creator Store and third-party model/package imports can include scripts. After i
 - Convert repeated decorative objects into cheaper reusable patterns where possible.
 - Run performance review for large asset drops.
 
-## MCP Workflow
+## Workflow
 
-1. Search or generate the asset.
-2. Insert third-party assets into a controlled quarantine folder or workspace location.
-3. Inspect with `inspect_instance`.
-4. Run an import security audit for third-party model/package/gameplay/UI assets.
-5. Use `screen_capture` for visual fit.
-6. Playtest if the asset affects collision, navigation, UI, or interaction.
-7. Check `get_console_output`.
+1. Search or generate the asset (`rbxstudio store '<query>'`, `rbxstudio mesh '<prompt>'`, `rbxstudio material '<prompt>'`) — this is an evaluation step in Studio.
+2. Insert third-party assets only into a controlled quarantine folder that Rojo does not manage.
+3. Inspect with `rbxstudio inspect`; run `roblox-creator-store-security-audit` for any third-party model/package/gameplay/UI asset.
+4. Screenshot for visual fit; playtest if it affects collision, navigation, UI, or interaction; check `rbxstudio console`.
+5. **Persist into Rojo:** record the asset ID in a config ModuleScript / `.model.json`, or have the user save the vetted model as `.rbxm` into the Rojo tree. Delete the quarantine copy. An asset that only exists in Studio is not done.
 
 ## Output
 

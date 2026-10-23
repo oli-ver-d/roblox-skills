@@ -33,7 +33,7 @@ A **tracer bullet**: the thinnest end-to-end path that a player can actually fee
 
 ### 1. Gather context
 
-Work from the PRD / conversation. If the user passes a reference (issue number, `ROADMAP.md` line, or file path), read it fully. Connect via `roblox-studio-workflow` if you need to see current place state. Use the game's own vocabulary.
+Work from the PRD / conversation. If the user passes a reference (issue number, `ROADMAP.md` line, or file path), read it fully. Read the Rojo tree (`roblox-rojo-workflow`) if you need to see the current code. Use the game's own vocabulary.
 
 ### 2. Draft the slices
 
